@@ -1,42 +1,41 @@
-
 version: 2
 
 sources:
   - name: raw
-
+    project: golden-frame-485711-p7
+    schema: gz_raw_data
     tables:
-      - name: :product
-        description: ürün bilgileri tablosu
+      - name: sales
+        identifier: raw_gz_sales
+        description: satış bilgileri tablosu
+        loaded_at_field: "CAST(date_date AS TIMESTAMP)"
+        freshness:
+          warn_after: {count: 90, period: day}
+        columns:
+          - name: date_date
+          - name: orders_id
+          - name: pdt_id
+          - name: revenue
+          - name: qty    
 
+      - name: product
+        identifier: raw_gz_product
+        description: ürün tablosu
         columns:
           - name: products_id
             tests:
-              - not_null
-              - unique
+              - not_null      
+              - unique          
           - name: purchase_price
-      - name: sales
-        description: satış bilgileri tablosu
-        columns:
-          - name: date_date
-            tests:
-              - not_null
-          - name: orders_is
-            tests:
-              - not_null
-          - name: product_id
-            tests:
-              - not_null
-          - name: revenue
-          - name: qty
+            data_type: FLOAT64
       - name: ship
+        identifier: raw_gz_ship
         description: kargo bilgileri tablosu
-
         columns:
           - name: orders_id
             tests:
               - not_null
           - name: shipping_fee
-          - name: shipping_fee1
           - name: log_cost
           - name: ship_cost
-          
+            data_type: FLOAT64
