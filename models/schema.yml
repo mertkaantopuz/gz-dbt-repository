@@ -1,5 +1,6 @@
 version: 2
 
+
 sources:
   - name: raw
     project: golden-frame-485711-p7
@@ -16,7 +17,14 @@ sources:
           - name: orders_id
           - name: pdt_id
           - name: revenue
-          - name: qty    
+          - name: quantity
+        tests:
+          - unique:
+              column_name: "(orders_id || '-' || pdt_id)"
+          - dbt_utils.unique_combination_of_columns:
+              combination_of_columns:
+                - orders_id
+                - pdt_id         
 
       - name: product
         identifier: raw_gz_product
@@ -39,3 +47,4 @@ sources:
           - name: log_cost
           - name: ship_cost
             data_type: FLOAT64
+        
