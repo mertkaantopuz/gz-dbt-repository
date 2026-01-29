@@ -18,4 +18,3 @@ SELECT
     date_date,revenue,margin,operational_margin,purchase_cost,shipping_fee,ship_cost,log_cost,quantity,
     ROUND(revenue/NULLIF(nb_transaction,0),2) as avg_basket
 from orders_per_day
-
