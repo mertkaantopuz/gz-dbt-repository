@@ -1,6 +1,5 @@
 version: 2
 
-
 sources:
   - name: raw
     project: golden-frame-485711-p7
@@ -25,7 +24,6 @@ sources:
               combination_of_columns:
                 - orders_id
                 - pdt_id         
-
       - name: product
         identifier: raw_gz_product
         description: ürün tablosu
@@ -47,4 +45,84 @@ sources:
           - name: log_cost
           - name: ship_cost
             data_type: FLOAT64
-        
+      - name : adwords
+        identifier: raw_gz_adwords
+        description: adwords tablosu
+        columns:
+          - name: date_date
+          - name: paid_source
+          - name: campaign_key
+          - name: camPGN_name
+          - name: ads_cost
+            data_type: FLOAT64
+          - name: impression
+          - name: click
+      
+      - name : bing
+        identifier: raw_gz_bing
+        description: bing tablosu
+        columns:
+          - name: date_date
+          - name: paid_source
+          - name: campaign_key
+          - name: camPGN_name
+          - name: ads_cost
+            data_type: FLOAT64
+          - name: impression
+          - name: click
+      
+      - name : criteo
+        identifier: raw_gz_criteo
+        description: criteo tablosu
+        columns:
+          - name: date_date
+          - name: paid_source
+          - name: campaign_key
+          - name: camPGN_name
+          - name: ads_cost
+            data_type:  FLOAT64
+          - name: impression
+          - name: click
+      
+      - name : facebook
+        identifier: raw_gz_facebook
+        description: facebook tablosu
+        columns:
+          - name: date_date
+          - name: paid_source
+          - name: campaign_key
+          - name: camPGN_name
+          - name: ads_cost
+            data_type:  FLOAT64
+          - name: impression
+          - name: click
+
+models:
+  - name  : int_campaigns
+    description:  bütün kampanyaların birleşimi
+    columns:
+      - name: date_date
+        tests:
+          - not_null
+      - name: paid_source
+        tests:
+          - not_null
+      - name: campaign_key
+        tests:
+          - not_null
+      - name: campaign_name
+      - name: ads_cost
+      - name: impression
+      - name: click
+  - name :  finance_campaigns_day
+    description: günlük kampanya ve sipariş listesi
+    columns:
+      - name: ads_margin
+        description: operational_margin - ads_cost
+        tests:
+          - not_null
+      - name: avg_basket
+        description: her gün için ortalama sepet tutarı
+        tests:
+          - not_null
+     
